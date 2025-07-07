@@ -167,6 +167,9 @@ impl MssqlStream {
                             EnvChange::PacketSize(size) => {
                                 self.max_packet_size = size.clamp(512, 32767).try_into().unwrap();
                             }
+                            EnvChange::RoutingInformation(host, port) => {
+                                return Ok(Message::Reroute(host, port));
+                            }
 
                             _ => {}
                         }
